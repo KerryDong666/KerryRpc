@@ -1,4 +1,4 @@
-package cn.itcast.rpc.common;
+package com.kerry.rpc.common;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -6,8 +6,8 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 import java.util.List;
 
 /**
- * RPC 解码器
- *
+ * RPC解码器(反序列化),用于把二进制文件转换为java对象
+ * @author Kerry Dong
  */
 public class RpcDecoder extends ByteToMessageDecoder {
 

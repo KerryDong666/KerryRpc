@@ -1,15 +1,19 @@
-package cn.itcast.rpc.common;
+package com.kerry.rpc.common;
 
 /**
- * 封装 RPC 请求
- *	封装发送的object的反射属性
+ * 封装 RPC 请求封装发送的object的反射属性
+ * @author Kerry Dong
  */
 public class RpcRequest {
-
+    /**请求id.*/
     private String requestId;
+    /**类名称.*/
     private String className;
+    /**方法名称.*/
     private String methodName;
+    /**方法类型.*/
     private Class<?>[] parameterTypes;
+    /**方法参数.*/
     private Object[] parameters;
 
     public String getRequestId() {

@@ -1,7 +1,8 @@
-package cn.itcast.rpc.registry;
+package com.kerry.rpc.registry;
 
 /**
  * 常量
+ * @author Kerry Dong
  */
 public class Constant {
 

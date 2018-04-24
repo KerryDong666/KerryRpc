@@ -1,4 +1,4 @@
-package cn.itcast.rpc.client;
+package com.kerry.rpc.client;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -14,14 +14,14 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cn.itcast.rpc.common.RpcDecoder;
-import cn.itcast.rpc.common.RpcEncoder;
-import cn.itcast.rpc.common.RpcRequest;
-import cn.itcast.rpc.common.RpcResponse;
+import com.kerry.rpc.common.RpcDecoder;
+import com.kerry.rpc.common.RpcEncoder;
+import com.kerry.rpc.common.RpcRequest;
+import com.kerry.rpc.common.RpcResponse;
 
 /**
  * 框架的RPC 客户端（用于发送 RPC 请求）
- *
+ * @author Kerry Dong
  */
 public class RpcClient extends SimpleChannelInboundHandler<RpcResponse> {
 

@@ -1,8 +1,9 @@
-package cn.itcast.rpc.common;
+package com.kerry.rpc.common;
 
 /**
  * 封装 RPC 响应
  * 封装相应object
+ * @author Kerry Dong
  */
 public class RpcResponse {
 

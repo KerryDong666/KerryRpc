@@ -1,19 +1,18 @@
-package cn.itcast.rpc.common;
+package com.kerry.rpc.common;
 
 import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.ProtostuffIOUtil;
 import com.dyuproject.protostuff.Schema;
 import com.dyuproject.protostuff.runtime.RuntimeSchema;
+import org.objenesis.Objenesis;
+import org.objenesis.ObjenesisStd;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.objenesis.Objenesis;
-import org.objenesis.ObjenesisStd;
-
 /**
  * 序列化工具类（基于 Protostuff 实现）
- *
+ * @author Kerry Dong
  */
 public class SerializationUtil {
 

@@ -18,7 +18,7 @@
         </dependency>
         <!-- RPC Common -->
         <dependency>
-            <groupId>cn.itcast.rpc</groupId>
+            <groupId>com.kerry.rpc</groupId>
             <artifactId>rpc-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

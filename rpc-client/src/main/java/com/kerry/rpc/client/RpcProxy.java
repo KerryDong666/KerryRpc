@@ -1,17 +1,17 @@
-package cn.itcast.rpc.client;
+package com.kerry.rpc.client;
+
+import com.kerry.rpc.common.RpcRequest;
+import com.kerry.rpc.common.RpcResponse;
+import com.kerry.rpc.registry.ServiceDiscovery;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.UUID;
 
-import cn.itcast.rpc.common.RpcRequest;
-import cn.itcast.rpc.common.RpcResponse;
-import cn.itcast.rpc.registry.ServiceDiscovery;
-
 /**
  * RPC 代理（用于创建 RPC 服务代理）
- *
+ * @author Kerry Dong
  */
 public class RpcProxy {
 

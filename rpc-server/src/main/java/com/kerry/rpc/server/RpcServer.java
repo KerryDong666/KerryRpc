@@ -1,10 +1,10 @@
-package cn.itcast.rpc.server;
+package com.kerry.rpc.server;
 
-import cn.itcast.rpc.common.RpcDecoder;
-import cn.itcast.rpc.common.RpcEncoder;
-import cn.itcast.rpc.common.RpcRequest;
-import cn.itcast.rpc.common.RpcResponse;
-import cn.itcast.rpc.registry.ServiceRegistry;
+import com.kerry.rpc.common.RpcDecoder;
+import com.kerry.rpc.common.RpcEncoder;
+import com.kerry.rpc.common.RpcRequest;
+import com.kerry.rpc.common.RpcResponse;
+import com.kerry.rpc.registry.ServiceRegistry;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -13,10 +13,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.commons.collections4.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,19 +21,21 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 框架的RPC 服务器（用于将用户系统的业务类发布为 RPC 服务）
  * 使用时可由用户通过spring-bean的方式注入到用户的业务系统中
  * 由于本类实现了ApplicationContextAware InitializingBean
  * spring构造本对象时会调用setApplicationContext()方法，从而可以在方法中通过自定义注解获得用户的业务接口和实现
  * 还会调用afterPropertiesSet()方法，在方法中启动netty服务器
- * @author blackcoder
+ * @author Kerry Dong
  *
  */
 public class RpcServer implements ApplicationContextAware, InitializingBean {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(RpcServer.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(RpcServer.class);
 
 	private String serverAddress;
 	private ServiceRegistry serviceRegistry;
@@ -61,8 +59,7 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
 	 */
 	public void setApplicationContext(ApplicationContext ctx)
 			throws BeansException {
-		Map<String, Object> serviceBeanMap = ctx
-				.getBeansWithAnnotation(RpcService.class);
+		Map<String, Object> serviceBeanMap = ctx.getBeansWithAnnotation(RpcService.class);
 		if (MapUtils.isNotEmpty(serviceBeanMap)) {
 			for (Object serviceBean : serviceBeanMap.values()) {
 				//从业务实现类上的自定义注解中获取到value，从来获取到业务接口的全名
@@ -107,7 +104,7 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
 
 			ChannelFuture future = bootstrap.bind(host, port).sync();
 			LOGGER.debug("server started on port {}", port);
-
+            //向ZK注册服务
 			if (serviceRegistry != null) {
 				serviceRegistry.register(serverAddress);
 			}

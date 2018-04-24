@@ -1,12 +1,12 @@
-package cn.itcast.rpc.common;
+package com.kerry.rpc.common;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 
 /**
- * RPC 编码器
- *
+ * RPC 编码器(序列化)
+ * @author Kerry Dong
  */
 public class RpcEncoder extends MessageToByteEncoder {
 
