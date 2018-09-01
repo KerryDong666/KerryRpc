@@ -25,8 +25,7 @@ import com.kerry.rpc.common.RpcResponse;
  */
 public class RpcClient extends SimpleChannelInboundHandler<RpcResponse> {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(RpcClient.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(RpcClient.class);
 
 	private String host;
 	private int port;

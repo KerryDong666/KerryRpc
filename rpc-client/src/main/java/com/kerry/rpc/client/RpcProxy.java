@@ -33,11 +33,13 @@ public class RpcProxy {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public <T> T create(Class<?> interfaceClass) {
+	public <T> T create(Class<?> interfaceClass)
+    {
 		return (T) Proxy.newProxyInstance(interfaceClass.getClassLoader(),
 				new Class<?>[] { interfaceClass }, new InvocationHandler() {
+					@Override
 					public Object invoke(Object proxy, Method method,
-							Object[] args) throws Throwable {
+										 Object[] args) throws Throwable {
 						//创建RpcRequest，封装被代理类的属性
 						RpcRequest request = new RpcRequest();
 						request.setRequestId(UUID.randomUUID().toString());

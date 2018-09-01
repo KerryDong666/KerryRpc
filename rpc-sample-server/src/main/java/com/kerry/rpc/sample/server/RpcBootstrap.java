@@ -10,6 +10,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class RpcBootstrap {
 
     public static void main(String[] args) {
-        new ClassPathXmlApplicationContext("spring.xml");
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+		System.out.println("服务启动成功:"+ context);
     }
 }
