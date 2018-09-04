@@ -7,6 +7,7 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
 
+	<context:component-scan base-package="com.kerry.rpc"/>
     <context:property-placeholder location="classpath:rpc.properties"/>
 
     <bean id="serviceDiscovery" class="com.kerry.rpc.registry.ServiceDiscovery">
@@ -16,5 +17,11 @@
     <bean id="rpcProxy" class="com.kerry.rpc.client.RpcProxy">
         <constructor-arg name="serviceDiscovery" ref="serviceDiscovery"/>
     </bean>
+
+	<bean id="clientInit" class="com.kerry.rpc.client.ClientInit">
+		<constructor-arg name="proxy" ref="rpcProxy"/>
+	</bean>
+
+
 
 </beans>

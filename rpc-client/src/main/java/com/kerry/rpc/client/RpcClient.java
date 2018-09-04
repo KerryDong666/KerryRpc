@@ -20,7 +20,8 @@ import com.kerry.rpc.common.RpcRequest;
 import com.kerry.rpc.common.RpcResponse;
 
 /**
- * 框架的RPC 客户端（用于发送 RPC 请求）
+ * 框架的RPC 客户端（用于发送 RPC 请求）:基于Netty的Handler
+ *
  * @author Kerry Dong
  */
 public class RpcClient extends SimpleChannelInboundHandler<RpcResponse> {
@@ -41,7 +42,7 @@ public class RpcClient extends SimpleChannelInboundHandler<RpcResponse> {
 
 	/**
 	 * 链接服务端，发送消息
-	 * 
+	 *
 	 * @param request
 	 * @return
 	 * @throws Exception

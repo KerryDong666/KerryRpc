@@ -17,4 +17,9 @@ import java.lang.annotation.Target;
 public @interface RpcService {
 
 	Class<?> value();
+
+	/**
+	 * bean名称
+	 */
+	String name() default "";
 }

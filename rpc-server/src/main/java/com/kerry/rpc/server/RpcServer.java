@@ -30,8 +30,8 @@ import java.util.Map;
  * 由于本类实现了ApplicationContextAware InitializingBean
  * spring构造本对象时会调用setApplicationContext()方法，从而可以在方法中通过自定义注解获得用户的业务接口和实现
  * 还会调用afterPropertiesSet()方法，在方法中启动netty服务器
- * @author Kerry Dong
  *
+ * @author Kerry Dong
  */
 public class RpcServer implements ApplicationContextAware, InitializingBean {
 
@@ -40,8 +40,10 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
 	private String serverAddress;
 	private ServiceRegistry serviceRegistry;
 
-	//用于存储业务接口和实现类的实例对象(由spring所构造)
-	private Map<String, Object> handlerMap = new HashMap<String, Object>();
+	/**
+	 * 用于存储业务接口和实现类的实例对象(由spring所构造),后续value会改造成list以实现负载均衡
+	 */
+	private Map<String, Object> handlerMap = new HashMap<>();
 
 	public RpcServer(String serverAddress) {
 		this.serverAddress = serverAddress;
@@ -57,6 +59,7 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
 	/**
 	 * 通过注解，获取标注了rpc服务注解的业务类的----接口及impl对象，将它放到handlerMap中
 	 */
+	@Override
 	public void setApplicationContext(ApplicationContext ctx)
 			throws BeansException {
 		Map<String, Object> serviceBeanMap = ctx.getBeansWithAnnotation(RpcService.class);
@@ -75,8 +78,8 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
 	 * 1、接收请求数据进行反序列化得到request对象
 	 * 2、根据request中的参数，让RpcHandler从handlerMap中找到对应的业务imple，调用指定方法，获取返回结果
 	 * 3、将业务调用结果封装到response并序列化后发往客户端
-	 *
 	 */
+	@Override
 	public void afterPropertiesSet() throws Exception {
 		EventLoopGroup bossGroup = new NioEventLoopGroup();
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
@@ -90,21 +93,24 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
 						public void initChannel(SocketChannel channel)
 								throws Exception {
 							channel.pipeline()
-									.addLast(new RpcDecoder(RpcRequest.class))// 注册解码 IN-1
-									.addLast(new RpcEncoder(RpcResponse.class))// 注册编码 OUT
-									.addLast(new RpcHandler(handlerMap));//注册RpcHandler IN-2
+									// 注册解码 IN-1
+									.addLast(new RpcDecoder(RpcRequest.class))
+									// 注册编码 OUT
+									.addLast(new RpcEncoder(RpcResponse.class))
+									// 注册RpcHandler IN-2
+									.addLast(new RpcHandler(handlerMap));
 						}
 					}).option(ChannelOption.SO_BACKLOG, 128)
 					.childOption(ChannelOption.SO_KEEPALIVE, true);
 
-			
+
 			String[] array = serverAddress.split(":");
 			String host = array[0];
 			int port = Integer.parseInt(array[1]);
 
 			ChannelFuture future = bootstrap.bind(host, port).sync();
 			LOGGER.debug("server started on port {}", port);
-            //向ZK注册服务
+			//向ZK注册服务
 			if (serviceRegistry != null) {
 				serviceRegistry.register(serverAddress);
 			}

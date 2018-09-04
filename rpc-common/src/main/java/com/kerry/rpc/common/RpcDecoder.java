@@ -3,6 +3,9 @@ package com.kerry.rpc.common;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 /**
@@ -10,6 +13,8 @@ import java.util.List;
  * @author Kerry Dong
  */
 public class RpcDecoder extends ByteToMessageDecoder {
+
+	private static final Logger log = LoggerFactory.getLogger(RpcDecoder.class);
 
     private Class<?> genericClass;
 
@@ -20,6 +25,7 @@ public class RpcDecoder extends ByteToMessageDecoder {
 
     @Override
     public final void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+    	// netty可读字节小于4个表示没有内容
         if (in.readableBytes() < 4) {
             return;
         }
@@ -28,6 +34,7 @@ public class RpcDecoder extends ByteToMessageDecoder {
         if (dataLength < 0) {
             ctx.close();
         }
+        // 处理tcp包不全的情况
         if (in.readableBytes() < dataLength) {
             in.resetReaderIndex();
         }
